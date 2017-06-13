@@ -1,0 +1,6 @@
+framework module Pods_SwiftLevelOne4 {
+  umbrella header "Pods-SwiftLevelOne4-umbrella.h"
+
+  export *
+  module * { export * }
+}
