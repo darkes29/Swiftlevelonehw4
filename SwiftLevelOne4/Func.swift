@@ -8,7 +8,7 @@
 
 import Foundation
 class fun<T>{
-    func WhaitIsType(a: T)->String{   // Функция выводящая сообщение о типе вводимых данных
+    func WhatIsType(a: T)->String{   // Функция выводящая сообщение о типе вводимых данных
         return(String(describing: type(of: a)))
     }
 }
