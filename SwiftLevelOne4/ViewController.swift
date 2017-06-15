@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         //    print(response.data)     // server data
             print(response.result)   // result of response serialization
             
-            if let JSON = response.result.value {
+            if response.result.value != nil {
                // Str+=String(describing: response.result)
                 
                 Str = Str + String(describing: response.result.value)
