@@ -12,6 +12,13 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 import RealmSwift
+var Str: String = ""
+class weather : Object {
+    dynamic var id = ""
+    dynamic var data = ""
+    
+}
+
 class ViewController: UIViewController {
     @IBOutlet var Label1: UILabel!
     @IBOutlet var TextInput1: UITextField!
@@ -30,25 +37,43 @@ class ViewController: UIViewController {
             String(d) + " is " + fun().WhatIsType(a: d) + "\r\n" +
             String(e) + " is " + fun().WhatIsType(a: e) + "\r\n" +
             String(f) + " is " + fun().WhatIsType(a: f)
+        let myweather = weather()
+        
+
+        
         //http://samples.openweathermap.org/data/2.5/forecast?q=Helsinki,fi&appid=b1b15e88fa797225412429c1c50c122a1
         
         Alamofire.request(TextInput1.text!).responseJSON { response in
-            print(response.request)  // original URL request
-            print(response.response) // HTTP URL response
-            print(response.data)     // server data
+         //   print(response.request)  // original URL request
+         //   print(response.response) // HTTP URL response
+        //    print(response.data)     // server data
             print(response.result)   // result of response serialization
+            
             if let JSON = response.result.value {
-                self.TextView1.text = String(describing: JSON)
+               // Str+=String(describing: response.result)
+                
+                Str = Str + String(describing: response.result.value)
+                
             }
         }
+        print(Str)
+        
+        myweather.id = "1"
+        myweather.data = Str
+        // Get the default Realm
+        let realm = try! Realm()
+        // You only need to do this once (per thread)
+        
+        // Add to the Realm inside a transaction
+        try! realm.write {
+            realm.add(myweather)
+        }
+        let rez = realm.objects(weather.self) // retrieves all Dogs from the default Realm
+        print(String(describing: rez))
+        self.TextView1.text = String(describing: rez)
 
-            
-        //Label2.text = String(b) + " is " + fun().WhatIsType(a: b)
-        //Label3.text = String(c) + " is " + fun().WhatIsType(a: c)
-        //Label4.text = String(d) + " is " + fun().WhatIsType(a: d)
-        //Label5.text = String(e) + " is " + fun().WhatIsType(a: e)
-        //Label6.text = String(f) + " is " + fun().WhatIsType(a: f)
-    }
+        }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
